@@ -1,0 +1,36 @@
+name: Lambda Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses:  actions/checkout@v3
+        
+      - name: setup python
+        uses: actions/setup-python@v3
+
+      - name: Install SAM CLI
+        run: |
+          curl -L  "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip" -o sam.zip
+          unzip sam.zip -d sam
+          sudo mv sam/* /usr/local/bin/
+        shell: bash
+
+      - name: Build
+        run: sam build
+
+      - name: Configure and Deploy
+        run: |
+          yes | sam deploy \
+            --stack-name hellowworldstack
+            --region ap-soth-1
+            --s3-bucket buildfile
+            --capabilities CAPABILITY_NAMED_IAM
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
