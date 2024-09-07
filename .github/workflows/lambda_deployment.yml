@@ -26,6 +26,7 @@ jobs:
       - name: Build
         run: sam build --template-file hello-world/template.yaml
 
+      #To deploy the updated code on lambda we can uncomment the below configuration
       # - name: Configure and Deploy
       #   run: |
       #     yes | sam deploy \
