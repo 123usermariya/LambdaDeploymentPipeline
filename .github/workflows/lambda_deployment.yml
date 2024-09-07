@@ -24,13 +24,13 @@ jobs:
         shell: bash
 
       - name: Build
-        run: sam build --template-file login-signup/template.yaml
+        run: sam build --template-file hello-world/template.yaml
 
       # - name: Configure and Deploy
       #   run: |
       #     yes | sam deploy \
-      #       --template-file login-signup/template.yaml \
-      #       --stack-name hellowworldstack \
+      #       --template-file hello-world/template.yaml \
+      #       --stack-name helloworldstack \
       #       --region ap-soth-1 \
       #       --s3-bucket buildfile \
       #       --capabilities CAPABILITY_NAMED_IAM
